@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% from "_macros.html" import render_field, render_input %}
+
+    <form action="/" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        {{ render_field(form.cantidad) }}
+            <button
+                type="submit"
+            >
+                ENVIAR
+            </button>
+    </form>
+    {% if form.cantidad.data %}
+    <hr>
+    <form action="/result" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <h1>Cajas</h1>
+            {% for i in range(0, form.cantidad.data) %}
+            {{ render_input(name="numeros-" ~ i) }}
+            {% endfor %}
+        <div class="mt-5 text-center">
+            <button
+                type="submit"
+            >
+                ENVIAR
+            </button>
+        </div>
+
+    </form>
+    {% endif %}
+
+{% endblock %}
